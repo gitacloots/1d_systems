@@ -4,14 +4,14 @@
 ## Presentation of the code:
 
 This code helps anyone with a given 1D potential to obtain the different dielectric response of the corresponding jellium system in mixed space representation: the code considers problems with a periodicity in the $x-y$ plane so the 1D potential is define along the $z$ axis. The in-plane composants must have a rotational symmetry so they can be analyzed in reciprocal space with the single variable $q_{||}$. The different dielectric responses computed include:
-\begin{itemize}
-\item the irreducible density response function, $\chi^0(q_{||}, \omega; z, z')$,
-\item the reducible density response function, $\chi(q_{||}, \omega; z, z')$,
-\item the dielectric function and its inverse, $\varepsilon(q_{||}, \omega; z, z')$ and $\varepsilon^{-1}(q_{||}, \omega; z, z')$,
-\item and the screened interactions, $W(q_{||}, \omega; z, z')$.
-\end{itemize}
 
-Two functions are aslo implemented to obtain the SPP response of the system. The first one is called the \textit{surface response function} and modelize the response of the system if an electron travels in the $x-y$ plane at $z=z_{\text{max}}$. It simulates the response of an EELS measurement in an \textit{aloof} configuration. The second function is the \textit{macroscopic loss function}. It is not a surface response but it uses the fact that the plasmon modes are nonetheless associated to the eigenvalues of the dielectric function to determine them. It is able to resolve the symmetric mode and bulk mode of any system. The antisymmetric mode are not shown with this method.
+-  the irreducible density response function, $\chi^0(q_{||}, \omega; z, z')$,
+- the reducible density response function, $\chi(q_{||}, \omega; z, z')$,
+-  the dielectric function and its inverse, $\varepsilon(q_{||}, \omega; z, z')$ and $\varepsilon^{-1}(q_{||}, \omega; z, z')$,
+-  and the screened interactions, $W(q_{||}, \omega; z, z')$.
+
+
+Two functions are aslo implemented to obtain the SPP response of the system. The first one is called the \textit{surface response function}, $g(\omega)$ and modelize the response of the system if an electron travels in the $x-y$ plane at $z=z_{\text{max}}$. It simulates the response of an EELS measurement in an \textit{aloof} configuration. The second function is the \textit{macroscopic loss function}, $L_{\text{M}}(\omega)$. It is not a surface response but it uses the fact that the plasmon modes are nonetheless associated to the eigenvalues of the dielectric function to determine them. It is able to resolve the symmetric mode and bulk mode of any system. The antisymmetric mode are not shown with this method.
 
 All the methods are defined using atomic units. The code uses python v3.11.
 
