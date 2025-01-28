@@ -9,6 +9,7 @@ This code helps anyone with a given 1D potential to obtain the different dielect
 \item the reducible density response function, $\chi(q_{||}, \omega; z, z')$,
 \item the dielectric function and its inverse, $\varepsilon(q_{||}, \omega; z, z')$ and $\varepsilon^{-1}(q_{||}, \omega; z, z')$,
 \item and the screened interactions, $W(q_{||}, \omega; z, z')$.
+\end{itemize}
 
 Two functions are aslo implemented to obtain the SPP response of the system. The first one is called the \textit{surface response function} and modelize the response of the system if an electron travels in the $x-y$ plane at $z=z_{\text{max}}$. It simulates the response of an EELS measurement in an \textit{aloof} configuration. The second function is the \textit{macroscopic loss function}. It is not a surface response but it uses the fact that the plasmon modes are nonetheless associated to the eigenvalues of the dielectric function to determine them. It is able to resolve the symmetric mode and bulk mode of any system. The antisymmetric mode are not shown with this method.
 
@@ -21,3 +22,23 @@ jellium.py allows to create a jellium_slab object where all the routines are aut
 With this object, the properties are computed using jellium._diel_properties(). It is also possible to add only specific dielectric function. The diagram below summarize how the different quantities are computed.
 
 ![image](diagram_eq.png)
+
+Most of the routines are defined in diel_1D.py, while tools.py is a series of convenient functions (Fourier transforms, vector manipulation, etc...).
+vis_help.py is a series of figure template to simplify the visualozation of the results.
+
+Two scripts still have to be uploaded: an SCF algorithm and a script to automatize the analyzes of a system with respect to a given parameter (pot, dens or qp).
+
+### Installation
+
+The scripts are build using python 3.11. The requirements.txt file include the installation of jupyter lab. If you don't want to install the jupyter lab, here is the list of the essential python packages to install and/or upload to run the code:
+
+- numpy 2.1.0 (compatible version with numba)
+- numba 0.61.0 (to compile the most time consuming steps of the computation)
+- plotly 5.24.1 (to produce the figures of the results)
+- dash 2.18.2 (optional; needed for the application summerizing the results, still to be added in the repository)
+
+### Examples
+
+TO DO
+
+### 
