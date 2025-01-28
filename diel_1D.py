@@ -250,7 +250,7 @@ def density(energies, bands, e_f):
 
 ### Other dielectric properties of 1D potential systems
 
-@jit(debug = True, nopython = True, parallel=True)
+#@jit(debug = True, parallel=True)
 def coulomb2d(q_paral, z_pot):
     nz = len(z_pot)
     delta = np.zeros((nz, nz))
