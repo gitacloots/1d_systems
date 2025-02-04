@@ -24,11 +24,11 @@ def file_builder(opt1, opt2, opt3, filename, sys_description):
 
 def param_filler(index, z_vec, pot, dens, omega, qp_vec, d, options, eta = 0.05*0.03675, sym = False):
     if options[1]=='q':
-        return jellium.jellium_slab(z_vec, pot, dens, qp_vec[index], omega, eta, d, sym)
+        return jellium.jellium_slab(z_vec, pot, dens, qp_vec[index], omega, eta=eta, d=d, sym=sym)
     elif options[1]=='d':
-        return jellium.jellium_slab(z_vec, pot, dens, qp_vec, omega, eta, d[index], sym)
+        return jellium.jellium_slab(z_vec, pot, dens, qp_vec, omega, eta=eta, d=d[index], sym=sym)
     else:
-        return jellium.jellium_slab(z_vec, pot[index], dens, qp_vec, omega, eta, d, sym)
+        return jellium.jellium_slab(z_vec, pot[index], dens, qp_vec, omega, eta=eta, d=d, sym=sym)
 
 def dict_builder(z_vec, pot, dens, omega, qp_vec, d, options = ('s', 'q', 'wo'), sys_description ='test' ,filename = "test",eta = 0.05*0.03675, sym = False):
     file_builder(options[0], options[1], options[2], filename, sys_description)
@@ -54,7 +54,7 @@ def dict_builder(z_vec, pot, dens, omega, qp_vec, d, options = ('s', 'q', 'wo'),
             sys.add_surf_resp_func()
             dict_test[i]['s'] = sys.surf_resp
             if options[2] == 'wo':
-                peaks, intensities = tools.find_plasmon_peaks(np.imag(sys.surf), omega)
+                peaks, intensities = tools.find_plasmon_peaks(np.imag(sys.surf_resp), omega)
                 dict_test[i]['peak'] = peaks
                 dict_test[i]['intensity'] = intensities
             else:
@@ -77,7 +77,7 @@ def dict_builder(z_vec, pot, dens, omega, qp_vec, d, options = ('s', 'q', 'wo'),
             dict_test[i]['s'] = sys.surf_resp
             dict_test[i]['m'] = sys.loss
             if options[2] == 'wo':
-                peaks, intensities = tools.find_plasmon_peaks(np.real(sys.loss), omega)
+                peaks, intensities = tools.find_plasmon_peaks(np.real(sys.surf_resp), omega)
                 dict_test[i]['peak_g'] = peaks
                 dict_test[i]['intensity_g'] = intensities
                 peaks, intensities = tools.find_plasmon_peaks(np.real(sys.loss), omega)

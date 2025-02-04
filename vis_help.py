@@ -193,3 +193,119 @@ def show_spat_mode(dict_in, lg_choice, nws_choice, index_x, index_y, x_info):
     fig.update_layout(xaxis = dict(tickfont = dict(size = 20), ticklen = 20), yaxis = dict(tickfont = dict(size = 20), ticklen = 20), font=dict(size=15))
 
     return fig
+
+
+def show_disp_curve(dict_disp_curve, lg_choice, nws_choice, x_info):
+    if x_info == 'qp':
+        d_space = np.array([0])
+        for i in dict_disp_curve.keys():
+            if i == 'info':
+                info = dict_disp_curve[i]
+            else:
+                d_space = np.append(d_space, dict_disp_curve[i]['normal']['qp'])
+            xtitle = r"$q_{||} \text{ (Bohr})^{-1}$"
+    elif x_info == 'space':
+        d_space = np.array([])
+        for i in dict_disp_curve.keys():
+            if i == 'info':
+                info = dict_disp_curve[i]
+            else:
+                d_space = np.append(d_space, dict_disp_curve[i]['normal']['space'])
+            xtitle = r"$d \text{ (Bohr})$"
+    if lg_choice == "Loss function":
+        resp_f_set = {}
+        mode_set = {}
+        intensity_set = {}
+        if nws_choice == "normal":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['normal']['response_functions']['l']['loss']
+                    for j in dict_disp_curve[i]['normal']['response_functions']['l']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['normal']['response_functions']['l']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['normal']['response_functions']['l']['modes'][j]['intensity']
+        elif nws_choice == "wide":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['wide']['response_functions']['l']['loss']
+                    for j in dict_disp_curve[i]['wide']['response_functions']['l']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['wide']['response_functions']['l']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['wide']['response_functions']['l']['modes'][j]['intensity']
+        elif nws_choice =="scf":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['scf']['response_functions']['l']['loss']
+                    for j in dict_disp_curve[i]['scf']['response_functions']['l']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['scf']['response_functions']['l']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['scf']['response_functions']['l']['modes'][j]['intensity']
+    elif lg_choice == "Surface function":
+        resp_f_set = {}
+        mode_set = {}
+        intensity_set = {}
+        if nws_choice == "normal":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['normal']['response_functions']['g']['surf_resp']
+                    for j in dict_disp_curve[i]['normal']['response_functions']['g']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['normal']['response_functions']['g']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['normal']['response_functions']['g']['modes'][j]['intensity']
+        elif nws_choice == "wide":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['wide']['response_functions']['g']['surf_resp']
+                    for j in dict_disp_curve[i]['wide']['response_functions']['g']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['wide']['response_functions']['g']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['wide']['response_functions']['g']['modes'][j]['intensity']
+        elif nws_choice =="scf":
+            for i in dict_disp_curve.keys():
+                if i=='info':
+                    continue
+                else:
+                    mode_set[i] = {}
+                    intensity_set[i] = {}
+                    resp_f_set[i] = dict_disp_curve[i]['scf']['response_functions']['g']['surf_resp']
+                    for j in dict_disp_curve[i]['scf']['response_functions']['g']['modes'].keys():
+                        mode_set[i][j] = dict_disp_curve[i]['scf']['response_functions']['g']['modes'][j]['freq']
+                        intensity_set[i][j] = dict_disp_curve[i]['scf']['response_functions']['g']['modes'][j]['intensity']
+    fig = go.Figure()
+    
+    ytitle = r"$\hbar \omega \text{ (eV)}$"
+    #qp_vec_fig_ang = qp_vec_fig*1.8897259886
+    """fig.add_trace(go.Scatter(x = qp_vec_ang, y = peak_s_s0, name = "3 Layers Jellium", legendgroup='1', mode = "markers",marker=dict(
+        size=5,color = "blue",
+        ),))"""
+    alpha = 14/0.999
+    p = 15-alpha
+    show_L = True
+    for i in mode_set.keys():
+        for j in mode_set[i].keys():
+            fig.add_trace(go.Scatter(x = np.array(d_space[i]), y = np.array(mode_set[i][j]), name = lg_choice+' '+nws_choice, showlegend=show_L, legendgroup='4',mode = "markers", marker=dict(
+                size=intensity_set[i][j]*alpha+p, color = "purple",
+                ),))
+            show_L = False
+
+
+    fig.update_layout(title_x=0.5, height = 600, xaxis_title= xtitle,
+        yaxis_title = ytitle, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', legend=dict(bordercolor = "black", borderwidth = 1, x = 1.1, y = 0.03))
+    fig.update_xaxes(color = "black", mirror="ticks", showline = True, visible = True, linewidth=1, linecolor='black',tickwidth=1, tickcolor='black', ticklen=10, nticks = 10,ticks="inside")
+    fig.update_yaxes(color = "black", mirror="ticks", showline = True, visible = True, linewidth=1, linecolor='black',tickwidth=1, tickcolor='black', ticklen=10, nticks = 10,ticks="inside")
+    return fig

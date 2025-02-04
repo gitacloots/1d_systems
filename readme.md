@@ -21,7 +21,7 @@ jellium.py allows to create a jellium_slab object where all the routines are aut
 
 With this object, the properties are computed using jellium._diel_properties(). It is also possible to add only specific dielectric function. The diagram below summarize how the different quantities are computed.
 
-![image](diagram_eq.png)
+![image](diagr_Eq.png)
 
 Most of the routines are defined in diel_1D.py, while tools.py is a series of convenient functions (Fourier transforms, vector manipulation, etc...).
 vis_help.py is a series of figure template to simplify the visualozation of the results.
